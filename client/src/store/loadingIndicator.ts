@@ -1,7 +1,7 @@
 import {
     clearLoadingIndicatorConst,
     setLoadingIndicatorConst
-} from "../constants";
+} from "../constants/redux";
 import { loadingIndicatorStateType, stringActionType } from "../types";
 
 const defaultState = {

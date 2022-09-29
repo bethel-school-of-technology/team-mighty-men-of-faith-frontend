@@ -1,4 +1,4 @@
-import { clearSnackBarConst, setSnackBarConst } from "../../constants";
+import { clearSnackBarConst, setSnackBarConst } from "../../constants/redux";
 import { stringActionType } from "../../types";
 
 export function setSnackBar(payload: string): stringActionType {
