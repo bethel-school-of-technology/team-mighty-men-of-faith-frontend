@@ -1,11 +1,33 @@
-import { configureStore } from "@reduxjs/toolkit";
-// ...
+import {
+    applyMiddleware, createStore
+} from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
+import allReducers from "./reducers";
 
-export const store = configureStore({
-  reducer: {},
-});
+// declare const window: any;
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
+const persistConfig = {
+  key: "carmigo",
+  storage,
+  timeout: undefined,
+  whitelist: [],
+  // blacklist: [
+  //   'isLoggedIn'
+  // ],
+};
+
+const persistedReducer = persistReducer(persistConfig, allReducers);
+
+export const STORE = createStore(
+  persistedReducer,
+
+  // compose(
+  applyMiddleware(thunk)
+  // window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(),
+  // )
+);
+
+export const PERSISTOR = persistStore(STORE);
