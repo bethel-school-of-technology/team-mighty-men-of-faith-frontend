@@ -1,18 +1,13 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
-
-import SearchBar from "./SearchBar";
 
 export default function SearchAppBar() {
   return (
     <StyledAppBar position="sticky">
       <Toolbar>
         <StyledTypography variant="h5" noWrap color="GrayText">
-          <Link to={"/"}>CARMIGO</Link>
+          CARMIGO
         </StyledTypography>
-
-        <SearchBar />
       </Toolbar>
     </StyledAppBar>
   );

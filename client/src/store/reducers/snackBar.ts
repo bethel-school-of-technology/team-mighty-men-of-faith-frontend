@@ -1,15 +1,15 @@
-import { clearSnackBarConst, setSnackBarConst } from "../constants/redux";
-import { stringActionType } from "../types";
+import { stringActionType } from "../../types";
+import { setSnackBarConst, clearSnackBarConst } from "../../constants";
 
 export default function servicesSearchCategories(
-  state: string = "",
+  state: string = '',
   action: stringActionType
 ): string {
   switch (action.type) {
     case setSnackBarConst:
       return action.payload;
     case clearSnackBarConst:
-      return "";
+      return '';
     default:
       return state;
   }

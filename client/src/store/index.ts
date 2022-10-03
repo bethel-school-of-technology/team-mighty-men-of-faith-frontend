@@ -6,21 +6,17 @@ import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import allReducers from "./reducers";
 
-// declare const window: any;
 
 const persistConfig = {
   key: "carmigo",
   storage,
   timeout: undefined,
   whitelist: [],
-  // blacklist: [
-  //   'isLoggedIn'
-  // ],
 };
 
 const persistedReducer = persistReducer(persistConfig, allReducers);
 
-export const STORE = createStore(
+export const store = createStore(
   persistedReducer,
 
   // compose(
@@ -30,4 +26,4 @@ export const STORE = createStore(
   // )
 );
 
-export const PERSISTOR = persistStore(STORE);
+export const persistor = persistStore(store);
