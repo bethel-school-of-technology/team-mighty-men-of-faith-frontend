@@ -1,22 +1,21 @@
 import { Avatar, MenuItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React from "react";
 import { tempVehiclesItemType } from "../types";
 import formattedTitle from "../utils/formattedTitle";
-
+import getPriceStr from "../utils/getPrice";
 
 interface schema {
   car: tempVehiclesItemType;
-  onSelect: (arg: number) => void;
+  onSelect: (arg: string) => void;
 }
 export default function SingleVehicleOption({ car, onSelect }: schema) {
   return (
     <StyledMenuItem
-      key={car.id}
+      key={car._id}
       value={formattedTitle(car.title)}
-      onClick={() => onSelect(car.id)}
+      onClick={() => onSelect(car._id)}
     >
-      <StyledAvatar alt={car.title} src={car.avatar} variant="square" />
+      <StyledAvatar alt={car.title} src={car.images[0]} variant="square" />
       <StyledDetailsDiv>
         <StyledFlexBoxDiv>
           <StyledTypographySecondaryHeading variant={"h6"}>
@@ -31,10 +30,11 @@ export default function SingleVehicleOption({ car, onSelect }: schema) {
         </StyledFlexBoxDiv>
         <StyledFlexBoxDiv>
           <StyledTypographySmallFont>
-            Rs{car.vehicleRentPerDay}/day
+            USD{getPriceStr(car.vehicleRentPerDay)}/day
           </StyledTypographySmallFont>
           <StyledTypographySmallFont sx={{ marginLeft: 5 }}>
-            Rs{car.vehicleRentPerMonth || car.vehicleRentPerDay * 30}
+            USD
+            {getPriceStr(car.vehicleRentPerMonth || car.vehicleRentPerDay * 30)}
             /Month
           </StyledTypographySmallFont>
         </StyledFlexBoxDiv>
@@ -64,11 +64,11 @@ const StyledFlexBoxDiv = styled("div")({
   justifyContent: "space-between",
   alignItems: "center",
 });
-const StyledTypographySecondaryHeading = styled(Typography)(({theme}) => ({
+const StyledTypographySecondaryHeading = styled(Typography)(({ theme }) => ({
   fontSize: 14,
   color: theme.palette.text.secondary,
 }));
-const StyledTypographySmallFont = styled(Typography)(({theme}) => ({
+const StyledTypographySmallFont = styled(Typography)(({ theme }) => ({
   fontSize: 12,
   color: theme.palette.text.secondary,
 }));

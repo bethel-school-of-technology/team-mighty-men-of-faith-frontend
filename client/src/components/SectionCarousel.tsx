@@ -70,7 +70,7 @@ export default function SectionCarousel() {
             ? images.map((image, index) => (
                 <div key={index} style={{ position: "relative" }}>
                   <StyledImage
-                    src={image.url as any}
+                    src={image}
                     alt={title}
                     width={800}
                     height={450}
@@ -104,7 +104,7 @@ export default function SectionCarousel() {
 
 const StyledImage = styled("img")({
   aspectRatio: "16/9",
-  objectFit: 'fill'
+  objectFit: "contain",
 });
 const StyledCaptionDiv = styled("div")({
   position: "absolute",

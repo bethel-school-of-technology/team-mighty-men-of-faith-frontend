@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { getCurrentVehicle } from "../store/selectors/index";
 import { stateTypes } from "../types/index";
+import getPriceStr from "../utils/getPrice";
 
 export default function useFormFooter() {
   const {
@@ -15,7 +16,7 @@ export default function useFormFooter() {
   const { addDriver, addInsurance, chargeByDay, startDate, endDate } =
     useSelector((state: stateTypes) => state.formFields);
 
-  const getPrice = (): number => {
+  const getPrice = () => {
     let price = 0;
     const totalDays = diffDays || 1;
 
@@ -34,7 +35,7 @@ export default function useFormFooter() {
       ? vehicleRentPerDay * totalDays
       : vehicleRentPerMonth * months || vehicleRentPerDay * (months * 30);
 
-    return price;
+    return getPriceStr(price);
   };
 
   const diffDate = Math.abs(endDate.valueOf() - startDate.valueOf());

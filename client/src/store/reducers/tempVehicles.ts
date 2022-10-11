@@ -2,7 +2,7 @@ import { setTempVehiclesConst } from "../../constants";
 
 import { tempVehiclesStateType, setTempVehiclesActionType } from "../../types";
 
-export default function tempCehicles(
+export default function tempVehicles(
   state: tempVehiclesStateType = {},
   action: any
 ): tempVehiclesStateType {
@@ -13,9 +13,6 @@ export default function tempCehicles(
         companyId,
         countryParam,
         cityParam,
-
-        filterParam,
-        sortParam,
         vehicles,
       }: setTempVehiclesActionType["payload"] = action.payload;
       return {
@@ -25,8 +22,6 @@ export default function tempCehicles(
           [companyId]: {
             countryParam,
             cityParam,
-            filterParam,
-            sortParam,
             vehicles,
           },
         },

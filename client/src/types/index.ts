@@ -32,7 +32,7 @@ export type whiteListCitiesActionType = {
 export type companiesItemType = {
   avatar: string;
   title: string;
-  id: string;
+  _id: string;
 };
 export type companiesStateType = {
   [city: string]: {
@@ -65,7 +65,7 @@ export const defaultSelectedVehicle = {
   vehicleAvailable: true,
   driverAvailable: true,
   insuranceAvailable: true,
-  id: 0,
+  _id: '',
   companyId: "",
   createdAt: new Date().toString(),
   updatedAt: new Date().toString(),
@@ -78,7 +78,7 @@ export type vehiclesItemType = {
   driverAvailable: boolean;
   driverRentPerDay: number;
   driverRentPerMonth: number;
-  images: { url: string }[];
+  images: string[];
   insuranceAvailable: boolean;
   insuranceRentPerDay: number;
   insuranceRentPerMonth: number;
@@ -88,7 +88,7 @@ export type vehiclesItemType = {
   vehicleRentPerMonth: number;
   title: string;
 
-  id: number;
+  _id: string;
   companyId: string;
   createdAt: string;
   updatedAt: string;
@@ -109,7 +109,7 @@ export const defaultSelectedTempVehicle = {
   model: 0,
   vehicleRentPerDay: 0,
   vehicleRentPerMonth: 0,
-  id: 0,
+  _id: '',
   companyId: "",
 };
 
@@ -119,11 +119,11 @@ export type tempVehiclesItemType = {
   countryId: string;
   cityId: string;
 
-  avatar: string;
+  images: string[];
   model: number;
   vehicleRentPerDay: number;
   vehicleRentPerMonth: number;
-  id: number;
+  _id: string;
   companyId: string;
 };
 export type tempVehiclesStateType = {
@@ -131,8 +131,6 @@ export type tempVehiclesStateType = {
     [company: string]: {
       countryParam: string | null;
       cityParam: string | null;
-      filterParam: string | null;
-      sortParam: string | null;
 
       vehicles: tempVehiclesItemType[];
     };
@@ -144,8 +142,6 @@ export type setTempVehiclesActionType = {
     cityId: string;
     countryParam: string | null;
     cityParam: string | null;
-    filterParam: string | null;
-    sortParam: string | null;
     companyId: string;
     vehicles: tempVehiclesItemType[];
   };
@@ -153,8 +149,6 @@ export type setTempVehiclesActionType = {
 export const defaultTempVehicles = {
   countryParam: null,
   cityParam: null,
-  filterParam: null,
-  sortParam: null,
   vehicles: [],
 };
 // ---------------------->selectedVehicle<--------------------
@@ -256,7 +250,7 @@ export interface stateTypes {
   tempVehicles: tempVehiclesStateType;
   booking: bookingStateType;
   currentCity: string;
-  selectedTempVehicleId: number;
+  selectedTempVehicleId: string;
   errors: errorsStateType;
 
   formFields: formFieldsStateType;

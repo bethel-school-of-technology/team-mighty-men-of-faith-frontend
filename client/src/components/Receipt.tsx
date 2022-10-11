@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { getCurrentVehicle } from "../store/selectors";
 import { stateTypes } from "../types";
 import formattedTitle from "../utils/formattedTitle";
+import getPriceStr from "../utils/getPrice";
 
 
 const Receipt = () => {
@@ -113,8 +114,8 @@ const Receipt = () => {
           <StyledTypography variant="caption">
             USD{" "}
             {chargeByDay
-              ? vehicleRentPerDay + "/Day"
-              : vehicleRentPerMonth + "/Month"}
+              ? getPriceStr(vehicleRentPerDay) + "/Day"
+              : getPriceStr(vehicleRentPerMonth) + "/Month"}
           </StyledTypography>
           <CheckCircleOutlineIcon color="primary" />
         </StyledBox>
@@ -226,8 +227,8 @@ const Receipt = () => {
             <StyledBox component="span">
               <StyledTypography variant="caption">
                 {chargeByDay
-                  ? driverRentPerDay + "/Day"
-                  : (driverRentPerMonth || driverRentPerDay * 30) + "/Month"}
+                  ? getPriceStr(driverRentPerDay) + "/Day"
+                  : getPriceStr(driverRentPerMonth || driverRentPerDay * 30) + "/Month"}
               </StyledTypography>
 
               <CheckCircleOutlineIcon color="primary" />
@@ -271,8 +272,8 @@ const Receipt = () => {
               <StyledTypography variant="caption">
                 USD{" "}
                 {chargeByDay
-                  ? insuranceRentPerDay + "/Day"
-                  : (insuranceRentPerMonth || insuranceRentPerDay * 30) +
+                  ? (getPriceStr(insuranceRentPerDay)) + "/Day"
+                  : getPriceStr(insuranceRentPerMonth || insuranceRentPerDay * 30) +
                     "/Month"}
               </StyledTypography>
 

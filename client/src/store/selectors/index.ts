@@ -16,7 +16,7 @@ const selectedTempVehicleSelector = (state: stateTypes) =>
   state.selectedTempVehicleId;
 const companiesSelector = (state: stateTypes) => state.companies;
 const citySelector = (state: stateTypes) => state.currentCity;
-const idSelector = (state: stateTypes, id: string) => id;
+const idSelector = (state: stateTypes, _id: string) => _id;
 
 const getThemCompanies = (
   city: string,

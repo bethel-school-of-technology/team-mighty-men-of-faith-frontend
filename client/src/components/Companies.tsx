@@ -68,7 +68,7 @@ const Companies = forwardRef(({ setShowVehiclesFalse }: schema, ref: any) => {
             </StyledAccordionSummary>
             <StyledAccordionDetails>
               <Vehicles
-                companyId={item.id}
+                companyId={item._id}
                 setShowVehiclesFalse={setShowVehiclesFalse}
               />
             </StyledAccordionDetails>

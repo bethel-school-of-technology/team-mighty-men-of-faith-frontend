@@ -1,10 +1,10 @@
 import { setSelectedTempVehicleIdConst } from "../../constants";
-import { numberActionType } from "../../types";
+import { stringActionType } from "../../types";
 
 export default function selectedVehicle(
-  state: number = 0,
-  action: numberActionType
-): number {
+  state: string = '',
+  action: stringActionType
+): string {
   switch (action.type) {
     case setSelectedTempVehicleIdConst:
       return action.payload;

@@ -5,52 +5,49 @@ import { batch } from "react-redux";
 import axios from "axios";
 
 import {
-  whiteListCitiesActionType,
-  companiesActionType,
-  setVehiclesActionType,
-  bookingActionType,
-  stateTypes,
-  stringActionType,
-  companiesItemType,
-  emptyActionType,
-  locationActionType,
-  generalParasActionsType,
-  setTempVehiclesActionType,
-  // tempVehiclesItemType,
-  dateActionType,
-  numberActionType,
-} from "../../types";
-import {
-  setCompaniesConst,
-  setVehiclesConst,
-  setWhiteListCitiesConst,
-  setCurrentCityConst,
-  setSelectedTempVehicleIdConst,
-  setStartDateConst,
-  setEndDateConst,
-  setStartDateErrorTrueConst,
-  setStartDateErrorFalseConst,
-  setEndDateErrorTrueConst,
-  setEndDateErrorFalseConst,
-  setStartTimeErrorTrueConst,
-  setStartTimeErrorFalseConst,
-  setEndTimeErrorTrueConst,
-  setEndTimeErrorFalseConst,
-  setLocationConst,
   addDriverConst,
-  removeDriverConst,
   addInsuranceConst,
-  removeInsuranceConst,
   chargeByDayConst,
   chargeByMonthConst,
-  setAllParasConst,
-  setSnackBarConst,
-  clearSnackBarConst,
-  setTempVehiclesConst,
-  setLoadingIndicatorConst,
   clearLoadingIndicatorConst,
+  clearSnackBarConst,
   notFound,
+  removeDriverConst,
+  removeInsuranceConst,
+  setCompaniesConst,
+  setCurrentCityConst,
+  setEndDateConst,
+  setEndDateErrorFalseConst,
+  setEndDateErrorTrueConst,
+  setEndTimeErrorFalseConst,
+  setEndTimeErrorTrueConst,
+  setLoadingIndicatorConst,
+  setLocationConst,
+  setSelectedTempVehicleIdConst,
+  setSnackBarConst,
+  setStartDateConst,
+  setStartDateErrorFalseConst,
+  setStartDateErrorTrueConst,
+  setStartTimeErrorFalseConst,
+  setStartTimeErrorTrueConst,
+  setTempVehiclesConst,
+  setVehiclesConst,
+  setWhiteListCitiesConst
 } from "../../constants";
+import {
+  bookingActionType,
+  companiesActionType,
+  companiesItemType,
+  // tempVehiclesItemType,
+  dateActionType,
+  emptyActionType,
+  locationActionType,
+  setTempVehiclesActionType,
+  setVehiclesActionType,
+  stateTypes,
+  stringActionType,
+  whiteListCitiesActionType
+} from "../../types";
 
 export function setLoadingIndicator(payload?: string): stringActionType {
   return {
@@ -127,7 +124,7 @@ export function setCurrentCity(payload: string): stringActionType {
     payload,
   };
 }
-export function setSelectedVehicleId(payload: number): numberActionType {
+export function setSelectedVehicleId(payload: string): stringActionType {
   return {
     type: setSelectedTempVehicleIdConst,
     payload,
@@ -232,20 +229,14 @@ interface promiseSchema {
   Catch?: (arg?: any) => any;
   InvalidRequest?: (arg?: any) => any;
 }
-export function fetchWhiteListCities({
-  Then,
-  Catch,
-  InvalidRequest,
-}: promiseSchema) {
+export function fetchWhiteListCities({ Then, Catch }: promiseSchema) {
   return (dispatch: any) => {
     axios
-      .get(`${process.env.BACK_END_API}/destinations/usa/cities`)
+      .get(`${process.env.REACT_APP_BACK_END_API}/destinations/USA/cities`)
       .then((result) => {
-        if (!result.data.success) return InvalidRequest?.();
-
         const cities: string[] = [];
-        result.data.result.forEach((obj: any) => {
-          cities.push(obj.cityId);
+        result.data.forEach((cityId: string) => {
+          cities.push(cityId);
         });
 
         batch(() => {
@@ -266,7 +257,7 @@ export function fetchWhiteListCities({
 export function fetchCompanies({ Then, Catch, InvalidRequest }: promiseSchema) {
   return (dispatch: any, getState: () => stateTypes) => {
     const whiteListCities = getState().whiteListCities;
-    const currentCity = getState().currentCity?.toLowerCase();
+    const currentCity = getState().currentCity;
 
     if (!currentCity.length) {
       dispatch(setSnackBar("Not A Valid City To Fetch"));
@@ -279,7 +270,7 @@ export function fetchCompanies({ Then, Catch, InvalidRequest }: promiseSchema) {
 
       InvalidRequest?.();
       return;
-    } else if (!whiteListCities.some((fuckCity) => fuckCity === currentCity)) {
+    } else if (!whiteListCities.some((city) => city === currentCity)) {
       dispatch(setSnackBar("Invalid City To Fetch"));
 
       InvalidRequest?.();
@@ -287,16 +278,14 @@ export function fetchCompanies({ Then, Catch, InvalidRequest }: promiseSchema) {
     }
 
     axios
-      .get(`${process.env.BACK_END_API}/companies/usa/${currentCity}`)
+      .get(`${process.env.REACT_APP_BACK_END_API}/companies/USA/${currentCity}`)
       .then((response) => {
-        if (!response.data?.success) return InvalidRequest?.();
-
         const companies: any = {};
 
-        response.data.result.forEach((company: companiesItemType) => {
-          companies[company.id] = company;
+        response.data.forEach((company: companiesItemType) => {
+          companies[company._id] = company;
         });
-        
+
         dispatch(
           setCompanies({
             cityId: currentCity,
@@ -315,32 +304,21 @@ export function fetchCompanies({ Then, Catch, InvalidRequest }: promiseSchema) {
 }
 
 interface vehicleSchema extends promiseSchema {
-  id: number;
+  _id: string;
 }
-export function fetchVehicle({
-  Then,
-  InvalidRequest,
-  Catch,
-  id,
-}: vehicleSchema) {
+export function fetchVehicle({ Then, Catch, _id }: vehicleSchema) {
   return (dispatch: any) => {
-    if (id < 1) {
-      dispatch(setSnackBar("Invalid id!"));
-      return InvalidRequest?.();
-    }
-
     dispatch(setLoadingIndicator("Fetching vehicle information..."));
 
     axios
-      .get(`${process.env.BACK_END_API}/vehicle/${id}`)
+      .get(`${process.env.REACT_APP_BACK_END_API}/vehicle/${_id}`)
       .then((response) => {
-        if (!response.data.success) return InvalidRequest?.();
-        const result = response.data?.result?.[0];
+        const result = response.data;
 
         batch(() => {
           dispatch(
             setVehicles({
-              [result?.id]: result,
+              [result?._id]: result,
             })
           );
 
@@ -363,42 +341,31 @@ export function fetchVehicle({
 interface fetchTempVehiclesSchema extends promiseSchema {
   countryParam: string | null;
   cityParam: string | null;
-  filterParam: string | null;
-  sortParam: string | null;
   companyId: string;
 }
 
 export function fetchTempVehicles({
   countryParam,
   cityParam,
-  filterParam,
-  sortParam,
   companyId,
   Then,
-  InvalidRequest,
   Catch,
 }: fetchTempVehiclesSchema) {
   return (dispatch: any) => {
-    let query = `${process.env.BACK_END_API}/vehicles/${companyId.replace(
-      /[+\-><\(\)~*\"@]+/g,
-      " "
-    )}?country=${countryParam ?? "usa"}`;
+    let query = `${
+      process.env.REACT_APP_BACK_END_API
+    }/vehicles/${companyId}?country=${countryParam ?? "USA"}`;
 
     if (cityParam) query += `&city=${cityParam}`;
-    if (filterParam) query += `&filter=${filterParam}`;
-    if (sortParam) query += `&sort=${sortParam}`;
 
     axios
       .get(query)
       .then((response) => {
-        if (!response.data?.success) return InvalidRequest?.();
-
         const vehicles: tempVehiclesItemType[] = [];
 
-        response.data.result.forEach((vehicle: any) => {
+        response.data.forEach((vehicle: any) => {
           vehicles.push({
             ...vehicle,
-            companyId,
           });
         });
 
@@ -409,8 +376,6 @@ export function fetchTempVehicles({
               cityId,
               countryParam,
               cityParam,
-              filterParam,
-              sortParam,
               companyId,
               vehicles,
             })
@@ -424,80 +389,4 @@ export function fetchTempVehicles({
         Catch?.(err);
       });
   };
-}
-
-export function setAllParas(
-  payload: generalParasActionsType["payload"]
-): generalParasActionsType {
-  return {
-    type: setAllParasConst,
-    payload,
-  };
-}
-
-interface letsContactUsSchema extends promiseSchema {
-  name: string;
-  number: string;
-  email: string;
-  body: string;
-  subject: string;
-}
-export function letsContactUs({
-  name,
-  number,
-  email,
-  body,
-  subject,
-  Then,
-  InvalidRequest,
-  Catch,
-}: letsContactUsSchema) {
-  return (dispatch: any) => {
-    if (
-      !name.length ||
-      !number.length ||
-      !email.length ||
-      !body.length ||
-      !subject.length
-    )
-      return InvalidRequest?.();
-
-    axios
-      .post(`${process.env.BACK_END_API}/contact-us`, {
-        name,
-        number,
-        email,
-        body,
-        subject,
-      })
-      .then((res) => {
-        dispatch(
-          setSnackBar("🎉 Your message has been successfully delivered!")
-        );
-        Then?.();
-      })
-      .catch((err) => {
-        dispatch(setSnackBar("Unable to send your request at the moment!"));
-        Catch?.(err);
-      });
-  };
-}
-
-interface searchQuerySchema extends promiseSchema {
-  query: string;
-}
-export function searchQuery({
-  query,
-  Then,
-  Catch,
-  InvalidRequest,
-}: searchQuerySchema) {
-  axios
-    .get(`${process.env.BACK_END_API}/search?q=${query}`)
-    .then((response) => {
-      if (!response.data?.success) return InvalidRequest?.();
-
-      return Then?.(response.data.result);
-    })
-    .catch(err => Catch?.(err));
 }

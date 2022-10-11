@@ -8,8 +8,10 @@ import SectionPills from "../components/SectionPills";
 import { defaultSpace, grey300, primaryMain } from "../theme/themeConstants";
 import SectionDownload from "../components/SectionDownload";
 import SectionTabs from "../components/SectionTabs";
+import useIndex from "../hooks/useIndex";
 
 export default function HomePage() {
+  useIndex()
   return (
     <StyledContainerDiv>
       <Cover />

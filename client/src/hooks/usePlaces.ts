@@ -77,7 +77,7 @@ export default function usePlaces() {
 
     setSuggestions(
       predictions.map((p: any, idx: number) => ({
-        id: p.id,
+        _id: p.id,
         description: p.description,
         placeId: p.place_id,
         index: idx,

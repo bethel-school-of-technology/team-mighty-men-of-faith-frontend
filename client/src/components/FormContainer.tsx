@@ -34,6 +34,7 @@ import {
 import { getCurrentVehicle } from "../store/selectors";
 import { stateTypes } from "../types";
 import formattedTitle from "../utils/formattedTitle";
+import getPriceStr from "../utils/getPrice";
 import Cities from "./Cities";
 import Companies from "./Companies";
 
@@ -57,7 +58,7 @@ const FormContainer = forwardRef<refType, schema>(
       insuranceAvailable,
       title,
       model,
-      id,
+      _id,
     } = useSelector(getCurrentVehicle);
     const citiesRef = useRef(null);
     const companiesRef = useRef(null);
@@ -157,13 +158,11 @@ const FormContainer = forwardRef<refType, schema>(
       }
     };
 
-    const fucktitle = Boolean(id)
+    const fucktitle = Boolean(_id)
       ? `${formattedTitle(title)} - ${model || ""}`
       : "Choose Your Vehicle";
 
-    const disabled = Boolean(!currentCity.length || !id);
-
-    // const {} = useFormContainer();
+    const disabled = Boolean(!currentCity.length || !_id);
 
     return (
       <StyledContainerDiv ref={ref}>
@@ -310,8 +309,8 @@ const FormContainer = forwardRef<refType, schema>(
               <Typography>
                 USD{" "}
                 {chargeByDay
-                  ? driverRentPerDay + "/Day"
-                  : (driverRentPerMonth || driverRentPerDay * 30) + "/Month"}
+                  ? getPriceStr(driverRentPerDay) + "/Day"
+                  : getPriceStr(driverRentPerMonth || driverRentPerDay * 30) + "/Month"}
               </Typography>
             </StyledStack>
             <Divider />
@@ -341,8 +340,8 @@ const FormContainer = forwardRef<refType, schema>(
               <Typography>
                 USD{" "}
                 {chargeByDay
-                  ? insuranceRentPerDay + "/Day"
-                  : (insuranceRentPerMonth || insuranceRentPerDay * 30) +
+                  ? getPriceStr(insuranceRentPerDay) + "/Day"
+                  : getPriceStr(insuranceRentPerMonth || insuranceRentPerDay * 30) +
                     "/Month"}
               </Typography>
             </StyledStack>
@@ -367,8 +366,8 @@ const FormContainer = forwardRef<refType, schema>(
           <Typography>
             USD{" "}
             {chargeByDay
-              ? vehicleRentPerDay + "/Day"
-              : (vehicleRentPerMonth || vehicleRentPerDay * 30) + "/Month"}
+              ? getPriceStr(vehicleRentPerDay) + "/Day"
+              : getPriceStr(vehicleRentPerMonth || vehicleRentPerDay * 30) + "/Month"}
           </Typography>
         </StyledStack>
         <Divider />

@@ -34,8 +34,6 @@ export default function Vehicles({ companyId, setShowVehiclesFalse }: schema) {
       fetchTempVehicles({
         countryParam: "USA",
         cityParam,
-        filterParam: null,
-        sortParam: null,
         companyId,
         InvalidRequest: () => setLoading(false),
         Then: () => setLoading(false),
@@ -51,7 +49,7 @@ export default function Vehicles({ companyId, setShowVehiclesFalse }: schema) {
     // eslint-disable-next-line
   }, [dispatch, condition]);
 
-  const onSelect = (id: number) => {
+  const onSelect = (id: string) => {
     dispatch(setSelectedVehicleId(id));
     setShowVehiclesFalse();
   };
