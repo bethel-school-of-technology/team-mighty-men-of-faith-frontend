@@ -240,6 +240,15 @@ export interface generalParasActionsType {
   type: string;
   payload: generalParasStateType;
 }
+// ---------------------->Auth State<--------------------
+export interface authStateType {
+  isLoggedIn: boolean;
+  token: string;
+}
+export interface authActionsType {
+  type: string;
+  payload: authStateType;
+}
 // ---------------------->Main Application State<--------------------
 export interface stateTypes {
   whiteListCities: string[];
@@ -256,5 +265,6 @@ export interface stateTypes {
   formFields: formFieldsStateType;
   paras: generalParasStateType;
   snackBar: string;
+  auth: authStateType;
 }
 // ----------------------><--------------------

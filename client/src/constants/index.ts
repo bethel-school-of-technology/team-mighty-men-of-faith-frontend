@@ -3,6 +3,8 @@ export const setWhiteListCitiesConst = "setWhiteListCities";
 export const setCompaniesConst = "setCompanies";
 export const addToCompaniesConst = "addToCompanies";
 // ------------------><-----------------
+export const setAuthConst = "setAuth";
+// ------------------><-----------------
 export const setLoadingIndicatorConst = "setLoadingIndicator";
 export const clearLoadingIndicatorConst = "clearLoadingIndicator";
 // ------------------><-----------------

@@ -24,8 +24,8 @@ const defaultState = {
   endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
 
   location: {
-    lat: 33.6844,
-    lng: 73.0479,
+    lat: 36.7783,
+    lng: 119.4179,
     address: "",
     isDefault: true,
   },

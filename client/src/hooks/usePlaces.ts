@@ -95,7 +95,7 @@ export default function usePlaces() {
         {
           // types: ["(regions)"],
           componentRestrictions: {
-            country: "PK",
+            country: "US",
           },
 
           input: value,

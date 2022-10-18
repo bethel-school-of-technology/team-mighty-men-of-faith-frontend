@@ -1,7 +1,7 @@
 import { SvgIconTypeMap, Tab, Tabs } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { styled } from "@mui/material/styles";
-import React, { memo } from "react";
+import { memo } from "react";
 import SwipeableForm from "./SwipeableForm";
 
 interface schema {
@@ -22,13 +22,16 @@ const SwipeableTabs = ({ tabs, activeTabIndex = 0 }: schema) => {
     <div>
       <StyledTabs
         value={activeTabIndex}
-        variant={'fullWidth'}
+        variant={"fullWidth"}
         // onChange={handleChange}
       >
         {tabs.map(({ TabIcon, title }, index) => (
-          <StyledTab key={index} 
-          
-          label={title} icon={<TabIcon fontSize={'large'} />} />
+          <StyledTab
+            key={index}
+            disableRipple
+            label={title}
+            icon={<TabIcon fontSize={"large"} />}
+          />
         ))}
       </StyledTabs>
       <SwipeableForm activeTabIndex={activeTabIndex} tabs={tabs} />
@@ -44,5 +47,4 @@ const StyledTabs = styled(Tabs)({
 
 const StyledTab = styled(Tab)({
   height: 100,
-
 });

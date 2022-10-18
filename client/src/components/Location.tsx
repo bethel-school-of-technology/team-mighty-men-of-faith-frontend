@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { stateTypes } from "../types";
 import CustomizedInputBase from "./CustomizedInputBase";
 
-const key = "";
+const key = "AIzaSyDJjNUjcRJeT5FdhYJxg2UCd6-XoiCfQwo";
 
 interface schema {
   containerHeight: number | null;

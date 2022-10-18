@@ -8,6 +8,9 @@ import {
   } from "@mui/material";
   import { styled } from "@mui/material/styles";
   import React, { memo, useState } from "react";
+import { useSelector } from "react-redux";
+import { stateTypes } from "../types";
+import LoginModal from "./LoginModal";
   import PaymentForm from "./PaymentForm";
   import Review from "./Review";
   
@@ -18,8 +21,14 @@ import {
   }
   const CheckOut = ({ containerHeight }: schema) => {
     const [activeStep, setActiveStep] = useState(0);
-  
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const isLoggedIn = useSelector((state: stateTypes) => state.auth.isLoggedIn)
+    const shouldPlaceOrder = activeStep === steps.length - 1
     const handleNext = () => {
+      if (shouldPlaceOrder && !isLoggedIn){
+        setShowLoginModal(true);
+        return
+      }
       setActiveStep(activeStep + 1);
     };
   
@@ -39,6 +48,7 @@ import {
     };
   
     return (
+      <>
       <StyledContainer>
         <StyledStepper activeStep={activeStep}>
           {steps.map((label) => (
@@ -77,13 +87,15 @@ import {
                   color="primary"
                   onClick={handleNext}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  {shouldPlaceOrder ? "Place order" : "Next"}
                 </StyledButton>
               </StyledButtonDiv>
             </>
           )}
         </>
       </StyledContainer>
+      <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+      </>
     );
   };
   

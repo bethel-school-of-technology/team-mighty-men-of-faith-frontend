@@ -15,6 +15,7 @@ import formFields from "./formFields";
 import paras from "./paras";
 import snackBar from "./snackBar";
 import loadingIndicator from "./loadingIndicator";
+import auth from './auth';
 
 export default combineReducers<stateTypes>({
   whiteListCities,
@@ -29,5 +30,6 @@ export default combineReducers<stateTypes>({
 
   formFields,
   paras,
-  loadingIndicator
+  loadingIndicator,
+  auth
 });
