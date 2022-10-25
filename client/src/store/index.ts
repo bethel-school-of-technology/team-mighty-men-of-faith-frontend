@@ -1,23 +1,10 @@
-import {
-    applyMiddleware, createStore
-} from "redux";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import { applyMiddleware, createStore } from "redux";
+
 import thunk from "redux-thunk";
 import allReducers from "./reducers";
 
-
-const persistConfig = {
-  key: "carmigo",
-  storage,
-  timeout: undefined,
-  whitelist: [],
-};
-
-const persistedReducer = persistReducer(persistConfig, allReducers);
-
 export const store = createStore(
-  persistedReducer,
+  allReducers,
 
   // compose(
   applyMiddleware(thunk)
@@ -25,5 +12,3 @@ export const store = createStore(
   //   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(),
   // )
 );
-
-export const persistor = persistStore(store);

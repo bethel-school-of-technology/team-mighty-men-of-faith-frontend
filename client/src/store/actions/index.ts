@@ -390,3 +390,41 @@ export function fetchTempVehicles({
       });
   };
 }
+
+
+
+interface postOrderSchema extends promiseSchema{
+  vehicleDetails: any,
+  additionalDetails: any,
+}
+export function  postOrder({
+  vehicleDetails,
+  additionalDetails,
+  Then,
+  Catch,
+}: postOrderSchema) {
+  return (dispatch: any) => {
+    let query = `${
+      process.env.REACT_APP_BACK_END_API
+    }/orders`;
+
+    const body = {
+      vehicleDetails,
+      additionalDetails
+    }
+
+    dispatch(setLoadingIndicator('Placing Order...'))
+
+    axios
+      .post(query, body)
+      .then((response) => {
+        Then?.();
+      })
+      .catch((err) => {
+        dispatch(setSnackBar("Unable to post order"));
+        Catch?.(err);
+      }).finally(() => {
+        dispatch(clearLoadingIndicator())
+      })
+  };
+}

@@ -36,9 +36,10 @@ export default function FormFooter({
           variant="outlined"
           color="primary"
           onClick={proceedToOrder}
-          disabled={activeTabIndex >= 3}
         >
-          Proceed To Order
+          {
+            activeTabIndex < 3 ? 'Proceed To Order' : "Place Order"
+          }
         </Button>
       </StyledGrid>
     </>
